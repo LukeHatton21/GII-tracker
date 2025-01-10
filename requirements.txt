@@ -1,1 +1,6 @@
 streamlit
+streamlit_folium
+pandas
+numpy
+plotly.express
+scipy
