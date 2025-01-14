@@ -76,4 +76,4 @@ with tab1:
     st.header("Existing Policy Interventions")
     intervention = st.selectbox("Policy Intervention", ["Carbon Tax", "Emissions Allowance", "EOR Tax Credit", "H2 Tax Credit", "Carbon Price"], key="Policy")
     intervention_name = {"Carbon Tax": "Carbon Tax\n(US/tonne)", "Emissions Allowance":"Emissions Allowance\n(US/tonne)", "EOR Tax Credit":"EOR Tax Credit\n(US/tonne)", "H2 Tax Credit":"H2 Tax Credit\n(US/kg)", "Carbon Price":"Carbon Price\n(US/tonne)"}
-    display_map(policy_df, intervention, intervention_name[intervention)
+    display_map(policy_df, intervention, intervention_name[intervention])
