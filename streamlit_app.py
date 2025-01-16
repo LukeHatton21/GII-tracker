@@ -77,3 +77,11 @@ with tab1:
     intervention = st.selectbox("Policy Intervention", ["Carbon Tax", "Emissions Allowance", "EOR Tax Credit", "H2 Tax Credit", "Carbon Price"], key="Policy")
     intervention_name = {"Carbon Tax": "Carbon Tax\n(US/tonne)", "Emissions Allowance":"Emissions Allowance\n(US/tonne)", "EOR Tax Credit":"EOR Tax Credit\n(US/tonne)", "H2 Tax Credit":"H2 Tax Credit\n(US/kg)", "Carbon Price":"Carbon Price\n(US/tonne)"}
     display_map(policy_df, intervention, intervention_name[intervention])
+with tab6: 
+    st.header("About")
+    st.header("Methods")
+    st.header("Funding")
+    st.header("License and Data Use Permissions")
+    st.write("The data available here is licensed as Creative Commons Attribution-NonCommercial International (CC BY-NC 4.0), which means you are free to copy, " + 
+            "redistribute and adapt it for non-commercial purposes, provided you give appropriate credit. If you wish to use the data for commercial purposes, " +
+            "please get in touch to discuss commercial license pricing.")   
