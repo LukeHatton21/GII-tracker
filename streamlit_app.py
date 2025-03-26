@@ -8,6 +8,7 @@ import plotly.express as px
 from scipy import stats
 from datetime import datetime
 import os
+from project_analyser import ProjectData
 
 def display_map(df, variable, variable_name, count=None):
     map = folium.Map(location=[10, 0], zoom_start=1, control_scale=True, scrollWheelZoom=True, tiles='CartoDB positron')
@@ -64,20 +65,35 @@ def display_map(df, variable, variable_name, count=None):
     return country_name
 
 
+## Set up title 
+st.title("🏭 Policy Interventions for Industrial Decarbonisation")
+
+
+# Set up selection for sector and tabs
+sector = st.selectbox("Hard-to-abate sector", ["Iron and Steel"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["🌐Policy Interventions", "🌎Existing Plants", "🏭Interventions",  "📝Changelog", "ℹ️About"])
+
 # Read in data
 policy_df = pd.read_csv("./DATA/Country_Policy_Tracker.csv")
+steel_df = pd.read_csv("./DATA/Iron_and_Steel.csv")
 
-## Set up title and tables
-st.title("🏭 Policy Interventions for Industrial Decarbonisation")
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["🌐Policy Interventions", "🏭Cement", "🏭Steel", "🏭Chemicals",  "📝Changelog", "ℹ️About"])
+
+# Call object to evaluate project level data
+project_data_class = ProjectData(project_df=steel_df)
+
+
 
 # Plot the map of policy interventions for tab1
 with tab1:
     st.header("Existing Policy Interventions")
     intervention = st.selectbox("Policy Intervention", ["Carbon Tax", "Emissions Allowance", "EOR Tax Credit", "H2 Tax Credit", "Carbon Price"], key="Policy")
-    intervention_name = {"Carbon Tax": "Carbon Tax\n(US/tonne)", "Emissions Allowance":"Emissions Allowance\n(US/tonne)", "EOR Tax Credit":"EOR Tax Credit\n(US/tonne)", "H2 Tax Credit":"H2 Tax Credit\n(US/kg)", "Carbon Price":"Carbon Price\n(US/tonne)"}
+    intervention_name = {"Carbon Tax": "Carbon Tax\n(US/t)", "Emissions Allowance":"Emissions Allowance\n(US/t)", "EOR Tax Credit":"EOR Tax Credit\n(US/t)", "H2 Tax Credit":"H2 Tax Credit\n(US/kg)", "Carbon Price":"Carbon Price\n(US/tonne)"}
     display_map(policy_df, intervention, intervention_name[intervention])
-with tab6: 
+with tab2:
+    st.header("Global Plant Capacities")
+    project_data_class.visualise_project_capacity()
+
+with tab5: 
     st.header("About")
     st.header("Methods")
     st.header("Funding")
