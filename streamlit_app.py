@@ -9,6 +9,7 @@ from scipy import stats
 from datetime import datetime
 import os
 from project_analyser import ProjectData
+from project_cost_estimator import ProjectCost
 
 def display_map(df, variable, variable_name, count=None):
     map = folium.Map(location=[10, 0], zoom_start=1, control_scale=True, scrollWheelZoom=True, tiles='CartoDB positron')
@@ -71,16 +72,17 @@ st.title("🏭 Policy Interventions for Industrial Decarbonisation")
 
 # Set up selection for sector and tabs
 sector = st.selectbox("Hard-to-abate sector", ["Iron and Steel"])
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["🌐Policy Interventions", "🌎Existing Plants", "🏭Interventions",  "📝Changelog", "ℹ️About"])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["🌐Policy Interventions", "🌎Existing Plants", "🏭Market Mechanisms",  "💳Cost Estimates", "📝Changelog", "ℹ️About"])
 
 # Read in data
 policy_df = pd.read_csv("./DATA/Country_Policy_Tracker.csv")
 steel_df = pd.read_csv("./DATA/Iron_and_Steel.csv")
+carbon_df = pd.read_csv("./DATA/CarbonData.csv")
 
 
 # Call object to evaluate project level data
 project_data_class = ProjectData(project_df=steel_df)
-
+project_cost_class = ProjectCost(project_df=steel_df)
 
 
 # Plot the map of policy interventions for tab1
@@ -92,6 +94,15 @@ with tab1:
 with tab2:
     st.header("Global Plant Capacities")
     project_data_class.visualise_project_capacity()
+with tab3:
+    st.header("Carbon Pricing Instruments")
+    st.write("TBC - Timeseries of emissions pricing in major markets")
+    st.line_chart(data=carbon_df, x="Year", y=["EU", "US","UK"],y_label="Carbon Price (USD/t)")
+with tab4:
+    st.header("Cost Estimates")
+    plant = st.selectbox("Country", options=sorted(steel_df["Plant Name"].unique()))
+    project_cost_class.visualise_cost_estimates(plant)
+
 
 with tab5: 
     st.header("About")

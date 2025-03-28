@@ -31,7 +31,8 @@ class ProjectData():
             plant_name = row['Plant Name']
             capacity = f"{row['Plant Capacity (Mtpa)']:.2f}"  
             emissions = f"{row['CO2 emitted per plant (without CCUS) (MtCO2/yr)']:.2f}"
-            tooltip_text = f"Plant: {plant_name}<br>Capacity: {capacity} Mtpa<br>Annual Emissions: {emissions} MtCO2/yr"
+            emission_intensity = f"{row['CO2 emitted per plant (without CCUS) (MtCO2/yr)']/row['Plant Capacity (Mtpa)']:0.2f}"
+            tooltip_text = f"{plant_name}<br>Capacity: {capacity} Mtpa<br>Annual Emissions: {emissions} MtCO2/yr"
             tooltip_text =  re.sub(r'([\(])', r'<br>\1', tooltip_text)
             return tooltip_text
         
